@@ -1,0 +1,32 @@
+{
+  "name": "node-proj",
+  "version": "1.0.0",
+  "description": "Music-Player",
+  "main": "app.js",
+  "engines": {
+    "node": "14.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "start-server": "node app.js"
+  },
+  "author": "kaushik",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "connect-mongodb-session": "^2.4.1",
+    "csurf": "^1.11.0",
+    "ejs": "^2.6.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.9.2",
+    "helmet": "^4.4.1",
+    "mongodb": "^3.6.4",
+    "mongoose": "^5.11.14",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.4.17",
+    "nodemailer-sendgrid-transport": "^0.2.0"
+  }
+}

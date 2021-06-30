@@ -1,0 +1,34 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <main class="centered">
+                <%if(product){%>
+                    <h1>
+                        <%=product.title%>
+                    </h1>
+                    <a href="/admin/edit-product/<%=product.id%>?edit=true" class="btn">Edit</a>
+                    <form action="/admin/delete-product" method="POST">
+                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                        <input type="hidden" value="<%=product.id%>" name="productId">
+                        <button class="btn" type="submit">Delete</button>
+                    </form>
+                    <hr>
+                    <div>
+                        <button id="replay" type="button" class="btn">Replay</button>
+                    </div>
+                    <h2>Playing : <span id="count" style="color: #EF6F51;">0</span> of <%=product.repeat%> <%if(product.repeat>1){%>times<%}else{%>time<%}%></h2>
+                    <p>
+                        <%=product.description%>
+                    </p>
+                    <audio id="music">
+                        <source id="p1" src="/<%=product.audioUrl%>" type="<%=filetype%>">
+                    </audio>
+                    <input type="hidden" id="repeatTimes" value="<%=product.repeat%>">
+                    <%} else{%>
+                        <h1>Nothing as such in the PlayList!</h1>
+                    <%}%>
+            </main>
+            <%- include('../includes/end.ejs') %>

@@ -1,0 +1,68 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (prods.length > 0) { %>
+                    <form action="/filter" method="POST">
+                        <div style="height: 3rem;display: flex;align-items: center;justify-content: center;margin-bottom: 1rem;">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <input type="text" name="filter" placeholder="Filter by title" style="height: 1.8rem;width:50%;max-width:25rem;margin-right:1rem;" value="">
+                            <button class="btn" type="submit">Search</button>
+                        </div>
+                    </form>
+                    <div class="grid">
+                        <% for (let product of prods) { %>
+                            <article class="card product-item" style="background-image: url('../../files/audio_bg.jpeg');">
+                                <div class="card__content" style="padding-bottom:0;">
+                                    <h1 class="product__title" style="color: white;">
+                                        <%= product.title %>
+                                    </h1>
+                                    <h2 class="product__price" style="color: rgb(255, 169, 98);font-size: 1.3rem;">
+                                        Repeat - <%= product.repeat %> 
+                                    </h2>
+                                    <p class="product__description" style="color:rgb(255, 0, 128);font-size: 1.2rem;font-weight:700">
+                                        <%= product.description %>
+                                    </p>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="/admin/edit-product/<%=product._id%>?edit=true" class="btn">Edit</a>
+                                    <form action="/admin/delete-product" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                        <input type="hidden" value="<%=product._id%>" name="productId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                                <div style="text-align: center;margin-bottom:1rem;">
+                                    <a href="/products/<%=product._id%>" class="btn">Check Out</a>
+                                </div>
+                                <div style="text-align: center;margin-bottom:1rem;">
+                                    <form action="/add-to-playlist" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                        <input type="hidden" value="<%=product._id%>" name="audioId">
+                                        <button class="btn" type="submit">Add To Playlist</button>
+                                    </form>
+                                </div>
+                                
+                            </article>
+                            <% } %>
+                    </div>
+                    <%if(!filter){%>
+                        <section class="pagination">
+                            <%if(hasPreviousPage) {%>
+                                <a href="/?page=<%=previousPage%>"><%=previousPage%></a>
+                            <%}%>
+                            <a href="/?page=<%=currentPage%>" class="active"><%=currentPage%></a>
+                            <%if(hasNextPage){%>
+                                <a href="/?page=<%=nextPage%>"><%=nextPage%></a>
+                            <%}%>
+                        </section>
+                    <%}%>
+                    <% } else { %>
+                        <h1>No Music Found!</h1>
+                    <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>

@@ -1,0 +1,58 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (prods.length>0) { %>
+                    <div style="text-align: center;display:flex; align-items:center; justify-content:center;">
+                        <div style="text-align: center;margin-right: 10px;">
+                            <button class="btn" id="playbtn">Start</button>
+                        </div>
+                        <div style="text-align: center;">
+                            <button class="btn" id="pausebtn">Stop</button>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="grid">
+                        <% for (let product of prods) { %>
+                            <article class="card product-item" style="background-image: url('../../files/audio_bg.jpeg');">
+                                <div class="card__content" style="padding-bottom:0;">
+                                    <h1 class="product__title" style="color: white;">
+                                        <%= product.audioId.title %>
+                                    </h1>
+                                    <!-- <h2 class="product__price" style="color: rgb(255, 169, 98);font-size: 1.3rem;">
+                                        Repeat - <%= product.repeat %> 
+                                    </h2> -->
+                                    <p class="product__description" style="color:rgb(255, 0, 128);font-size: 1.2rem;font-weight:700">
+                                        <%= product.audioId.description %>
+                                    </p>
+                                </div>
+                                <div class="card__actions">
+                                    <form action="/remove" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                        <input type="hidden" value="<%=product.audioId._id%>" name="audioId">
+                                        <button class="btn" type="submit">Remove</button>
+                                    </form>
+                                </div>
+                                <div style="text-align: center;margin-bottom:1rem;">
+                                    <button class="btn" id="<%=product.no%>">Play Now</button>
+                                </div>
+                                <div style="text-align: center;margin-bottom:1rem;">
+                                    <button class="btn" id="stop<%=product.no%>">Pause</button>
+                                </div>
+                                <audio class="<%=product.no%>" style="display:none;">
+                                    <source src="/<%=product.audioId.audioUrl%>" type="<%=product.audioId.filetype%>">
+                                </audio>
+                                
+                            </article>
+                            <% } %>
+                    </div>
+                <% } else { %>
+                    <h1>No music in your playlist! Add and listen.</h1>
+                <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>
